@@ -64,12 +64,27 @@ end
 
 function script_save(settings)
     obs.obs_data_set_string(settings, "last_scene", last_scene)
+    
+    local hotkey_save_data = obs.obs_hotkey_save(hotkey_id)
+    if hotkey_save_data then
+        local wrapper = obs.obs_data_create()
+        obs.obs_data_set_array(wrapper, "hotkey_data", hotkey_save_data)
+        local json_str = obs.obs_data_get_json(wrapper)
+        obs.obs_data_set_string(settings, "toggle_scene_hotkey_data", json_str)
+        obs.obs_data_release(wrapper)
+        obs.obs_data_array_release(hotkey_save_data)
+    end
 end
 
 function script_load(settings)
     hotkey_id = obs.obs_hotkey_register_frontend("toggle_scene_hotkey", "Toggle Scene Hotkey", toggle_scene)
-    local save_hotkey = obs.obs_data_get_int(settings, "toggle_scene_hotkey")
-    if hotkey_id ~= obs.OBS_INVALID_HOTKEY_ID and save_hotkey ~= 0 then
-        obs.obs_hotkey_load(hotkey_id, save_hotkey)
+    
+    local json_str = obs.obs_data_get_string(settings, "toggle_scene_hotkey_data")
+    if json_str and json_str ~= "" then
+        local wrapper = obs.obs_data_create_from_json(json_str)
+        local hotkey_save_data = obs.obs_data_get_array(wrapper, "hotkey_data")
+        obs.obs_hotkey_load(hotkey_id, hotkey_save_data)
+        obs.obs_data_array_release(hotkey_save_data)
+        obs.obs_data_release(wrapper)
     end
 end
