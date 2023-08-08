@@ -1,6 +1,7 @@
 # OBS Toggle Scene Plugin
 
 ## **Description**:
+
 This plugin allows you to toggle between the currently active scene and a predefined scene in OBS using a hotkey.
 
 ## **Installation**:
@@ -14,7 +15,7 @@ This plugin allows you to toggle between the currently active scene and a predef
 ## **Configuration**:
 
 1. Once the script is loaded in OBS, you should see a property named "Select Scene" in the script's properties pane.
-2. Use the dropdown list to select the scene you wish to toggle to.
+2. Use the dropdown list to select the scene you wish to toggle to. (if you don't see your desired scene check the [**Troubleshooting**](#troubleshooting) tab)
 3. Close the scripts window.
 
 ## **Usage**:
@@ -29,4 +30,5 @@ This plugin allows you to toggle between the currently active scene and a predef
 
 - Ensure the `scene_toggler.lua` script is loaded in the Scripts section.
 - If the scene doesn't switch, double-check that the scene name in the dropdown list is correct and exists in your OBS.
+- If the scene isn't visible in the dropdown click the little refresh button at the bottom left of the window.
 - Make sure the hotkey you set isn't already in use by another function in OBS.
